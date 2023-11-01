@@ -3,16 +3,16 @@ import { ImageBackground, StyleSheet } from "react-native";
 import Localizacao from "../../components/Localizacao";
 
 
-const Home = () => {
+const Home = () => { 
+
   const localizacaoData = Localizacao();
-  console.log(localizacaoData.apiData.current.condition.text)
+  console.log(localizacaoData.apiData)
   return (
     
-   
-      <ImageBackground source={require(`../../../assets/background/dia.png`)} style={styles.imageBackground} />
-    
-
-   
+      <ImageBackground source={require(`../../../assets/background/dia.png`)} style={styles.imageBackground} >
+        <Text>{localizacaoData?.apiData?.location?.name}</Text> 
+        <Text>{localizacaoData?.apiData?.current?.feelslike_c}</Text> 
+      </ImageBackground>
   )
 }
 
