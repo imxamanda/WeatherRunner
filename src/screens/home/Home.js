@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Image, ImageBackground } from 'react-native';
-import { Modal, Portal, Button, Provider } from 'react-native-paper';
+import { Modal, Portal, Button, Provider, Text } from 'react-native-paper';
 import Localizacao from '../../components/Localizacao';
 import { useFonts, VT323_400Regular } from '@expo-google-fonts/vt323';
+import Sobrenos from '../../components/Sobrenos';
 
 const Home = () => {
   const localizacaoData = Localizacao();
@@ -55,9 +56,9 @@ const Home = () => {
           <Modal
             visible={isAboutModalVisible}
             onDismiss={toggleAboutModal}
-            contentContainerStyle={styles.modalContainer}
+            contentContainerStyle={styles.modalContainer} 
           >
-            <Text>About Modal Content</Text>
+          <Sobrenos></Sobrenos>
           </Modal>
         </Portal>
       </ImageBackground>
@@ -104,6 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonText: {
+    fontFamily: 'VT323_400Regular',
     color: 'white',
     textAlign: 'center',
     fontSize: 18,
@@ -111,5 +113,10 @@ const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: 'white',
     padding: 20,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    width: '100%',
   },
 });
