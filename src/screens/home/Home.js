@@ -1,5 +1,5 @@
 import { Text } from "react-native-paper"
-import { ImageBackground, StyleSheet, View } from "react-native";
+import { Image, ImageBackground, StyleSheet, View } from "react-native";
 import Localizacao from "../../components/Localizacao";
 import { useFonts, VT323_400Regular } from '@expo-google-fonts/vt323';
 
@@ -24,7 +24,12 @@ const Home = () => {
         <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 150, color: 'white', paddingTop: 0}}>{localizacaoData?.apiData?.current?.feelslike_c}°</Text>
 
         <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 40, color: '#bcbcbc', marginTop: 28}}>{localizacaoData?.apiData?.current?.condition.text}</Text>
-
+        
+        <Image
+            style={styles.image}
+            source={require(`../../../assets/character/clay.png`)}
+        />
+ 
       </View>
     </ImageBackground>
   )
@@ -48,5 +53,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 50,
     gap: -68
-  }
+  },
+
+  image: {
+       width: 200 ,
+       height: 200,
+     },
 });
