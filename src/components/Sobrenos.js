@@ -6,10 +6,10 @@ import { List } from 'react-native-paper';
 export default function Sobrenos() {
     
     const links = [
-        { text: '- Davi', url: 'https://github.com/davimcostaa' },
+        { text: '- Davi Costa', url: 'https://github.com/davimcostaa' },
         { text: '- Amanda Vitória', url: 'https://github.com/Mandygando' },
-        { text: '- Ruan', url: 'https://github.com/Ruan227' },
-        { text: '- Felipe', url: 'https://github.com/lipestile' },
+        { text: '- Ruan Silva', url: 'https://github.com/Ruan227' },
+        { text: '- Felipe Carvalho', url: 'https://github.com/lipestile' },
         { text: '- Amanda Vieira', url: 'https://github.com/imxamanda' }
       ];
     
