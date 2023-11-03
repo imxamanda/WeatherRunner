@@ -26,12 +26,12 @@ const Home = () => {
 
   return (
     <Provider>
-      <ImageBackground source={require(`../../../assets/background/noiteNublado.png`)} style={styles.imageBackground}>
+      <ImageBackground source={require(`../../../assets/background/diaNublado.png`)} style={styles.imageBackground}>
         <View style={styles.temperatura}>
           <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 80, color: 'white', paddingBottom: 0 }}>{localizacaoData?.apiData?.location?.name}</Text>
           <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 150, color: 'white', paddingTop: 0 }}>{localizacaoData?.apiData?.current?.feelslike_c}°</Text>
 
-          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 40, color: '#bcbcbc', marginTop: 28 }}>{localizacaoData?.apiData?.current?.condition.text}</Text>
+          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 40, color: '#bcbcbc', marginTop: 28, padding: 20 }}>{localizacaoData?.apiData?.current?.condition.text}</Text>
 
           <Image
             style={styles.image}
@@ -44,12 +44,12 @@ const Home = () => {
             <Text style={styles.buttonText}>Game</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonLarge}>
-            <Text style={styles.buttonText}>Weather</Text>
+            <Text style={styles.buttonText}>Clima</Text>
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.buttonSmall} onPress={toggleAboutModal}>
-          <Text style={styles.buttonText}>About</Text>
+        <TouchableOpacity style={styles.buttonAbout} onPress={toggleAboutModal}>
+          <Text style={styles.buttonTextAbout}>About</Text>
         </TouchableOpacity>
 
         <Portal>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
+    width: '100%'
   },
   temperatura: {
     flex: 1,
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     gap: -68,
   },
   image: {
+    margin: 80,
     width: 200,
     height: 200,
   },
@@ -91,24 +92,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    marginBottom: 20,
+    marginBottom: 55,
+    gap: 25
   },
   buttonLarge: {
     backgroundColor: '#6959CD',
-    padding: 20,
+    padding: 10,
     borderRadius: 10,
     marginRight: 10,
+    width: 110,
+    height: 70
   },
-  buttonSmall: {
+  buttonAbout: {
     backgroundColor: '#483D8B',
     padding: 10,
     borderRadius: 10,
+    marginBottom: 50
   },
   buttonText: {
     fontFamily: 'VT323_400Regular',
     color: 'white',
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 28,
+  },
+  buttonTextAbout: {
+    fontFamily: 'VT323_400Regular',
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 22,
   },
   modalContainer: {
     backgroundColor: 'white',

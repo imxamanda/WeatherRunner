@@ -29,7 +29,7 @@ export default function Localizacao() {
     if (latitude !== null && longitude !== null) {
       (async () => {
         try {
-          const response = await Api.get(`/current.json?q=${latitude},${longitude}&`);
+          const response = await Api.get(`/current.json?q=${latitude},${longitude}&lang=pt`);
           setApiData(response.data);
         } catch (error) {
           console.log("Erro: ", error);
