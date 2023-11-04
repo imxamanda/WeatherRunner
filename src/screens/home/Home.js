@@ -1,20 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Image, ImageBackground } from 'react-native';
 import { Modal, Portal, Button, Provider, Text } from 'react-native-paper';
 import Localizacao from '../../components/Localizacao';
 import { useFonts, VT323_400Regular } from '@expo-google-fonts/vt323';
 import Sobrenos from '../../components/Sobrenos';
+import diaBackground from '../../../assets/background/dia.png';
+import noiteBackground from '../../../assets/background/noite.png';
 
 const Home = () => {
   const localizacaoData = Localizacao();
-  console.log(localizacaoData.apiData);
+  const [imagemBackground, setImagemBackground] = useState('dia')
+  const [isAboutModalVisible, setAboutModalVisible] = useState(false);
+  console.log(localizacaoData)
+  
+  useEffect(() => {
+    if (localizacaoData?.apiData?.current?.is_day == 0) {
+      setImagemBackground('noite')
+    } else {
+      setImagemBackground('dia')
+    }
+    console.log(imagemBackground)
+  }, [localizacaoData]) 
 
   let [fontsLoaded] = useFonts({
     VT323_400Regular,
   });
 
-  const [isAboutModalVisible, setAboutModalVisible] = useState(false);
 
   const toggleAboutModal = () => {
     setAboutModalVisible(!isAboutModalVisible);
@@ -26,7 +38,7 @@ const Home = () => {
 
   return (
     <Provider>
-      <ImageBackground source={require(`../../../assets/background/diaNublado.png`)} style={styles.imageBackground}>
+      <ImageBackground source={imagemBackground === 'dia' ? diaBackground : noiteBackground} style={styles.imageBackground}>
         <View style={styles.temperatura}>
           <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 80, color: 'white', paddingBottom: 0 }}>{localizacaoData?.apiData?.location?.name}</Text>
           <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 150, color: 'white', paddingTop: 0 }}>{localizacaoData?.apiData?.current?.feelslike_c}°</Text>
@@ -39,10 +51,17 @@ const Home = () => {
           />
         </View>
 
+
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.buttonLarge}>
-            <Text style={styles.buttonText}>Game</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonLarge}>
+            <ImageBackground
+              style={styles.buttonBackground}
+              source={require(`../../../assets/button.png`)}
+            >
+              <Text style={styles.buttonText}>Game</Text>
+            </ImageBackground>
+        </TouchableOpacity>
+
           <TouchableOpacity style={styles.buttonLarge}>
             <Text style={styles.buttonText}>Clima</Text>
           </TouchableOpacity>
@@ -93,15 +112,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     marginBottom: 55,
-    gap: 25
+    gap: 25,
+    marginTop: 20
   },
   buttonLarge: {
-    backgroundColor: '#6959CD',
-    padding: 10,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 10,
-    marginRight: 10,
-    width: 110,
-    height: 70
+    width: 200, 
+    height: 200, 
+  },
+  buttonBackground: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%', 
   },
   buttonAbout: {
     backgroundColor: '#483D8B',
@@ -112,7 +140,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: 'VT323_400Regular',
     color: 'white',
-    textAlign: 'center',
     fontSize: 28,
   },
   buttonTextAbout: {
