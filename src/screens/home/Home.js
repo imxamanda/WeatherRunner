@@ -13,7 +13,7 @@ const Home = () => {
   const [imagemBackground, setImagemBackground] = useState('dia')
   const [isAboutModalVisible, setAboutModalVisible] = useState(false);
   console.log(localizacaoData)
-  
+
   useEffect(() => {
     if (localizacaoData?.apiData?.current?.is_day == 0) {
       setImagemBackground('noite')
@@ -21,7 +21,7 @@ const Home = () => {
       setImagemBackground('dia')
     }
     console.log(imagemBackground)
-  }, [localizacaoData]) 
+  }, [localizacaoData])
 
   let [fontsLoaded] = useFonts({
     VT323_400Regular,
@@ -53,31 +53,40 @@ const Home = () => {
 
 
         <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.buttonLarge}>
+          <TouchableOpacity style={styles.buttonLarge}>
+            <ImageBackground
+              style={styles.buttonBackground}
+              source={require(`../../../assets/button.png`)}
+
+            >
+              <Text style={styles.buttonText}>Game</Text>
+            </ImageBackground>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.buttonLarge}>
             <ImageBackground
               style={styles.buttonBackground}
               source={require(`../../../assets/button.png`)}
             >
-              <Text style={styles.buttonText}>Game</Text>
+              <Text style={styles.buttonText}>Clima</Text>
             </ImageBackground>
-        </TouchableOpacity>
-
-          <TouchableOpacity style={styles.buttonLarge}>
-            <Text style={styles.buttonText}>Clima</Text>
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.buttonAbout} onPress={toggleAboutModal}>
-          <Text style={styles.buttonTextAbout}>About</Text>
+        <TouchableOpacity onPress={toggleAboutModal}>
+          <ImageBackground
+          source={require(`../../../assets/about.png`)}
+          style={styles.imageabout}
+          />
         </TouchableOpacity>
 
         <Portal>
           <Modal
             visible={isAboutModalVisible}
             onDismiss={toggleAboutModal}
-            contentContainerStyle={styles.modalContainer} 
+            contentContainerStyle={styles.modalContainer}
           >
-          <Sobrenos></Sobrenos>
+            <Sobrenos></Sobrenos>
           </Modal>
         </Portal>
       </ImageBackground>
@@ -111,7 +120,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    marginBottom: 55,
+    marginBottom: 7,
     gap: 25,
     marginTop: 20
   },
@@ -120,8 +129,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    width: 200, 
-    height: 200, 
+    width: 200,
+    height: 200,
   },
   buttonBackground: {
     flex: 1,
@@ -129,18 +138,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '100%', 
-  },
-  buttonAbout: {
-    backgroundColor: '#483D8B',
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 50
+    height: '100%',
   },
   buttonText: {
     fontFamily: 'VT323_400Regular',
     color: 'white',
     fontSize: 28,
+    bottom: 30,
+    right: 2
+
   },
   buttonTextAbout: {
     fontFamily: 'VT323_400Regular',
@@ -157,4 +163,8 @@ const styles = StyleSheet.create({
     right: 0,
     width: '100%',
   },
+  imageabout:{
+    width: 100,
+    height:90,
+  }
 });
