@@ -36,6 +36,12 @@ const Home = () => {
     return null;
   }
 
+    const handleClimaPress = () => {
+      // Navega para a tela 'Weather'
+      navigation.navigate('Weather');
+    };
+  
+
   return (
     <Provider>
       <ImageBackground source={imagemBackground === 'dia' ? diaBackground : noiteBackground} style={styles.imageBackground}>
@@ -51,19 +57,20 @@ const Home = () => {
           />
         </View>
 
-
+  
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.buttonLarge}>
             <ImageBackground
               style={styles.buttonBackground}
-              source={require(`../../../assets/button.png`)}
-
+                source={require(`../../../assets/button.png`)}
             >
               <Text style={styles.buttonText}>Game</Text>
             </ImageBackground>
           </TouchableOpacity>
+        
 
-          <TouchableOpacity style={styles.buttonLarge}>
+
+          <TouchableOpacity style={styles.buttonLarge} onPress={handleClimaPress}>
             <ImageBackground
               style={styles.buttonBackground}
               source={require(`../../../assets/button.png`)}
@@ -72,6 +79,8 @@ const Home = () => {
             </ImageBackground>
           </TouchableOpacity>
         </View>
+
+        
 
         <TouchableOpacity onPress={toggleAboutModal}>
           <ImageBackground
