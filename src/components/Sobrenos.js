@@ -4,7 +4,7 @@ import { useFonts, VT323_400Regular } from '@expo-google-fonts/vt323';
 import { List } from 'react-native-paper';
 
 export default function Sobrenos() {
-    
+    //link dos perfis do github
     const links = [
         { text: '- Davi Costa', url: 'https://github.com/davimcostaa' },
         { text: '- Amanda Vitória', url: 'https://github.com/Mandygando' },
@@ -17,6 +17,7 @@ export default function Sobrenos() {
         Linking.openURL(url);
       };
     
+      //fonte de texto
     let [fontsLoaded] = useFonts({
         VT323_400Regular,
       });
@@ -27,11 +28,14 @@ export default function Sobrenos() {
         return null;
       }
   return (
-    <View>
+    <View> 
+      {/* Conteúdo do botão about us */}
        <Text  style={{fontFamily: 'VT323_400Regular', fontSize: 20}} >{'  '}Quem somos?</Text>
         <Text  style={{fontFamily: 'VT323_400Regular', marginTop: 10}}>
             {'      '}Bem-vindo ao nosso 'appgaming' de clima! Somos um grupo de estudantes do Instituto de Educação Superior de Brasília (IESB) apaixonados por jogos e meteorologia. Juntos, criamos este aplicativo para fornecer informações precisas e atualizadas sobre o clima em todo o mundo, combinando nossa paixão por jogos com nossas habilidades em desenvolvimento de software.
             </Text>
+
+            {/* Seção dos links do github */}
         <List.Section>
         <List.Subheader  style={{fontFamily: 'VT323_400Regular', fontSize: 20}}>Links do Github:</List.Subheader>
         {links.map((link, index) => (

@@ -14,6 +14,7 @@ const Home = () => {
   const [isAboutModalVisible, setAboutModalVisible] = useState(false);
   console.log(localizacaoData)
 
+     //variável para mudar o background conforme a API
   useEffect(() => {
     if (localizacaoData?.apiData?.current?.is_day == 0) {
       setImagemBackground('noite')
@@ -23,11 +24,12 @@ const Home = () => {
     console.log(imagemBackground)
   }, [localizacaoData])
 
+   //fonte
   let [fontsLoaded] = useFonts({
     VT323_400Regular,
   });
 
-
+   // Constante modal
   const toggleAboutModal = () => {
     setAboutModalVisible(!isAboutModalVisible);
   };
@@ -36,8 +38,9 @@ const Home = () => {
     return null;
   }
 
-    const handleClimaPress = () => {
+
       // Navega para a tela 'Weather'
+    const handleClimaPress = () => {
       navigation.navigate('Weather');
     };
   
@@ -46,18 +49,21 @@ const Home = () => {
     <Provider>
       <ImageBackground source={imagemBackground === 'dia' ? diaBackground : noiteBackground} style={styles.imageBackground}>
         <View style={styles.temperatura}>
+          {/* Localização */}
           <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 80, color: 'white', paddingBottom: 0 }}>{localizacaoData?.apiData?.location?.name}</Text>
+          {/* Temperatura */}
           <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 150, color: 'white', paddingTop: 0 }}>{localizacaoData?.apiData?.current?.feelslike_c}°</Text>
 
           <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 40, color: '#bcbcbc', marginTop: 28, padding: 20 }}>{localizacaoData?.apiData?.current?.condition.text}</Text>
-
+           
+           {/* Personagem */}
           <Image
             style={styles.image}
             source={require(`../../../assets/character/clay.png`)}
           />
         </View>
 
-  
+          {/* Botão Jogo */}
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.buttonLarge}>
             <ImageBackground
@@ -69,7 +75,7 @@ const Home = () => {
           </TouchableOpacity>
         
 
-
+           {/* Botão Clima */}
           <TouchableOpacity style={styles.buttonLarge} onPress={handleClimaPress}>
             <ImageBackground
               style={styles.buttonBackground}
@@ -81,7 +87,7 @@ const Home = () => {
         </View>
 
         
-
+            {/* Modal */}
         <TouchableOpacity onPress={toggleAboutModal}>
           <ImageBackground
           source={require(`../../../assets/about.png`)}
@@ -94,8 +100,10 @@ const Home = () => {
             visible={isAboutModalVisible}
             onDismiss={toggleAboutModal}
             contentContainerStyle={styles.modalContainer}
-          >
-            <Sobrenos></Sobrenos>
+          >  
+          
+          {/* Componente que puxa as informações para o botão "about us" */}
+            <Sobrenos/>
           </Modal>
         </Portal>
       </ImageBackground>
