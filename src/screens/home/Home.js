@@ -8,11 +8,10 @@ import Sobrenos from '../../components/Sobrenos';
 import diaBackground from '../../../assets/background/dia.png';
 import noiteBackground from '../../../assets/background/noite.png';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const localizacaoData = Localizacao();
   const [imagemBackground, setImagemBackground] = useState('dia')
   const [isAboutModalVisible, setAboutModalVisible] = useState(false);
-  console.log(localizacaoData)
 
      //variável para mudar o background conforme a API
   useEffect(() => {
@@ -40,10 +39,13 @@ const Home = () => {
 
 
       // Navega para a tela 'Weather'
-    const handleClimaPress = () => {
-      navigation.navigate('Weather');
-    };
-  
+      const handleClimaPress = () => {
+        navigation.navigate('Clima', {
+          latitude: localizacaoData.latitude,
+          longitude: localizacaoData.longitude,
+        });
+      };
+      
 
   return (
     <Provider>
