@@ -20,7 +20,6 @@ const Home = ({navigation}) => {
     } else {
       setImagemBackground('dia')
     }
-    console.log(imagemBackground)
   }, [localizacaoData])
 
    //fonte
@@ -43,6 +42,7 @@ const Home = ({navigation}) => {
         navigation.navigate('Clima', {
           latitude: localizacaoData.latitude,
           longitude: localizacaoData.longitude,
+          horario: imagemBackground
         });
       };
       
