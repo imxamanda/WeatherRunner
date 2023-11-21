@@ -1,26 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Image, ImageBackground } from 'react-native';
-import { Modal, Portal, Button, Provider, Text } from 'react-native-paper';
+import { Modal, Portal, Provider, Text } from 'react-native-paper';
 import Localizacao from '../../components/Localizacao';
 import { useFonts, VT323_400Regular } from '@expo-google-fonts/vt323';
 import Sobrenos from '../../components/Sobrenos';
-import diaBackground from '../../../assets/background/dia.png';
-import noiteBackground from '../../../assets/background/noite.png';
+import dia from '../../../assets/background/dia.png';
+import diaNublado from '../../../assets/background/diaNublado.png';
+import noite from '../../../assets/background/noite.png';
+import noiteNublada from '../../../assets/background/noiteNublada.png';
+import climas from '../../climas.json'
 
 const Home = ({navigation}) => {
+
   const localizacaoData = Localizacao();
-  const [imagemBackground, setImagemBackground] = useState('dia')
+
+  const [imagemBackground, setImagemBackground] = useState(dia)
   const [isAboutModalVisible, setAboutModalVisible] = useState(false);
+  const [horario, setHorario] = useState('');
+  const [cor, setCor] = useState('');
 
      //variável para mudar o background conforme a API
-  useEffect(() => {
-    if (localizacaoData?.apiData?.current?.is_day == 0) {
-      setImagemBackground('noite')
-    } else {
-      setImagemBackground('dia')
-    }
-  }, [localizacaoData])
+     useEffect(() => {
+      const conditionText = localizacaoData?.apiData?.current?.condition.text;
+    
+      if (
+        localizacaoData?.apiData?.current?.is_day === 0 &&
+        climas.comChuvaNeveVento.includes(conditionText)
+      ) {
+        setImagemBackground(noiteNublada);
+        setHorario('noiteNublada');
+        setCor('#4F4460')
+      } else if (
+        localizacaoData?.apiData?.current?.is_day === 0 &&
+        climas.semChuvaNeveVento.includes(conditionText)
+      ) {
+        setImagemBackground(noite);
+        setHorario('noite');
+        setCor('#7758D1')
+      } else if (
+        localizacaoData?.apiData?.current?.is_day === 1 &&
+        climas.comChuvaNeveVento.includes(conditionText)
+      ) {
+        setImagemBackground(diaNublado);
+        setHorario('diaNublado');
+        setCor('#E4E1D6')
+      } else {
+        setImagemBackground(dia);
+        setHorario('dia');
+        setCor('#fff')
+      }
+    }, [localizacaoData]);
 
    //fonte
   let [fontsLoaded] = useFonts({
@@ -36,27 +66,27 @@ const Home = ({navigation}) => {
     return null;
   }
 
-
       // Navega para a tela 'Weather'
       const handleClimaPress = () => {
         navigation.navigate('Clima', {
           latitude: localizacaoData.latitude,
           longitude: localizacaoData.longitude,
-          horario: imagemBackground
+          imagemBackground: imagemBackground,
+          cor: cor
         });
       };
       
 
   return (
     <Provider>
-      <ImageBackground source={imagemBackground === 'dia' ? diaBackground : noiteBackground} style={styles.imageBackground}>
+      <ImageBackground source={imagemBackground} style={styles.imageBackground}>
         <View style={styles.temperatura}>
           {/* Localização */}
           <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 80, color: 'white', paddingBottom: 0 }}>{localizacaoData?.apiData?.location?.name}</Text>
           {/* Temperatura */}
           <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 150, color: 'white', paddingTop: 0 }}>{localizacaoData?.apiData?.current?.feelslike_c}°</Text>
 
-          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 40, color: '#bcbcbc', marginTop: 28, padding: 20 }}>{localizacaoData?.apiData?.current?.condition.text}</Text>
+          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 40, color: cor, marginTop: 28, padding: 20 }}>{localizacaoData?.apiData?.current?.condition.text}</Text>
            
            {/* Personagem */}
           <Image
@@ -134,6 +164,7 @@ const styles = StyleSheet.create({
     margin: 80,
     width: 200,
     height: 200,
+    marginBottom: 40,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -141,7 +172,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginBottom: 7,
     gap: 25,
-    marginTop: 20
+    marginTop: 40
   },
   buttonLarge: {
     flex: 1,

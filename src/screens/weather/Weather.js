@@ -2,17 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import Api from '../../services/Api';
 import { useFonts, VT323_400Regular } from '@expo-google-fonts/vt323';
-import diaBackground from '../../../assets/background/dia.png';
-import noiteBackground from '../../../assets/background/noite.png';
 import { Divider } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
 
 export default function Weather({ navigation, route }) {
   const latitude = route.params.latitude;
   const longitude = route.params.longitude;
-  const imageBackground = route.params.imageBackground;
-  console.log(latitude);
-  console.log(longitude);
+  const imagemBackground = route.params.imagemBackground;
+  const cor = route.params.cor;
 
   const [apiData, setApiData] = useState(null);
 
@@ -31,19 +28,19 @@ export default function Weather({ navigation, route }) {
     return null;
   }
 
-  const isDay = imageBackground === 'dia';
+  // const isDay = horario === 'dia';
 
-  const getBackgroundColor = () => {
-    if (isDay) {
-      return { backgroundColor: '#74cae3', textColor: '#fff' }; // Cores para o dia
-    } else {
-      return { backgroundColor: '#81007f', textColor: '#fff' }; // Cores para a noite
-    }
-  };
+  // const getBackgroundColor = () => {
+  //   if (isDay) {
+  //     return { backgroundColor: '#74cae3', textColor: '#fff' }; 
+  //   } else {
+  //     return { backgroundColor: '#81007f', textColor: '#fff' }; 
+  //   }
+  // };
 
   console.log(apiData);
   return (
-    <ImageBackground source={isDay ? diaBackground : noiteBackground} style={styles.imageBackground}>
+    <ImageBackground source={imagemBackground} style={styles.imageBackground}>
       <View style={styles.container}>
         <View>
           <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 25, color: 'white', paddingBottom: 0, paddingLeft: 20, marginTop: 50 }}>{apiData?.location?.name}, {apiData?.location?.region}</Text>
@@ -52,28 +49,28 @@ export default function Weather({ navigation, route }) {
             <Divider style={{ width: 1, height: '50%' }} />
             <View>
               <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 25, color: 'white', paddingBottom: 0 }}> {apiData?.forecast?.forecastday?.[0]?.day?.maxtemp_c}°</Text>
-              <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 25, color: '#bcbcbc', paddingBottom: 0 }}> {apiData?.forecast?.forecastday?.[0]?.day?.mintemp_c}°</Text>
+              <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 25, color: cor, paddingBottom: 0 }}> {apiData?.forecast?.forecastday?.[0]?.day?.mintemp_c}°</Text>
             </View>
           </View>
-          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 30, color: '#bcbcbc', paddingTop: 0, textAlign: 'center' }}>{apiData?.current?.condition.text}</Text>
+          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 30, color: cor, paddingTop: 0, textAlign: 'center' }}>{apiData?.current?.condition.text}</Text>
 
           <View style={styles.info}>
-            <View style={[styles.viewInfo, { backgroundColor: getBackgroundColor().backgroundColor }]}>
-              <Feather name="wind" size={30} color={getBackgroundColor().textColor} />
+            <View style={[styles.viewInfo, { backgroundColor: cor }]}>
+              <Feather name="wind" size={30} color={"#fff"} />
               <Text style={styles.textoPequeno}>
                 {apiData?.current?.wind_kph} km/h
               </Text>
             </View>
 
-            <View style={[styles.viewInfo, { backgroundColor: getBackgroundColor().backgroundColor }]}>
-              <Feather name="thermometer" size={30} color={getBackgroundColor().textColor} />
+            <View style={[styles.viewInfo, { backgroundColor: cor }]}>
+              <Feather name="thermometer" size={30} color={"#fff"} />
               <Text style={styles.texto}>
                 {apiData?.current?.temp_c}°
               </Text>
             </View>
 
-            <View style={[styles.viewInfo, { backgroundColor: getBackgroundColor().backgroundColor }]}>
-              <Feather name="droplet" size={30} color={getBackgroundColor().textColor} />
+            <View style={[styles.viewInfo, { backgroundColor: cor }]}>
+              <Feather name="droplet" size={30} color={'#fff'} />
               <Text style={styles.texto}>
                 {apiData?.current?.humidity}%
               </Text>
