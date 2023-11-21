@@ -45,6 +45,13 @@ const Home = ({navigation}) => {
           horario: imagemBackground
         });
       };
+      const hadleGamePress = () => {
+        navigation.navigate('Jogo', {
+          latitude: localizacaoData.latitude,
+          longitude: localizacaoData.longitude,
+          horario: imagemBackground
+        });
+      };
       
 
   return (
@@ -67,7 +74,9 @@ const Home = ({navigation}) => {
 
           {/* Botão Jogo */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.buttonLarge}>
+          <TouchableOpacity style={styles.buttonLarge}
+          onPress={hadleGamePress}
+          >
             <ImageBackground
               style={styles.buttonBackground}
                 source={require(`../../../assets/button.png`)}

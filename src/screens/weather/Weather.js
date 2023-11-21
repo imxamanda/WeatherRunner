@@ -95,7 +95,7 @@ export default function Weather({ navigation, route }) {
         <View style={styles.butao}>
           <TouchableOpacity
             onPress={() => { navigation.navigate('Home') }}
-            style={styles.buttonLarge}>
+>
             <ImageBackground
               style={styles.imagebutao}
               source={require(`../../../assets/button.png`)}
