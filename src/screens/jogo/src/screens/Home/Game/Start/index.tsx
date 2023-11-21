@@ -5,7 +5,7 @@ import LOGO from "../../../../assets/images/logo.png";
 import PLAY from "../../../../assets/images/play.png";
 
 import { styles } from "./styles";
-
+//Imagens logo e play
 const Start = ({ handleOnStart }) => {
   return (
     <View style={styles.container}>

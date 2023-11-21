@@ -3,7 +3,6 @@ import { useEffect, useCallback } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { Home } from "./screens/Home";
 
-// Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
 const App = () => {

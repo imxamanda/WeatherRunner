@@ -11,7 +11,7 @@ const Flor = (props) => {
   const yBody = props.body.position.y - heightBody / 2;
 
   const color = props.color;
-
+// Lógica para calcular posicionamento e dimensões do chão com base nas props recebidas.
   return (
     <View
       style={
@@ -21,30 +21,32 @@ const Flor = (props) => {
           xBody,
           yBody,
           color,
-        }).bird
+        }).Flor
       }
     />
   );
 };
 
 export default (world, color, pos, size) => {
+  // Cria um corpo Matter.js para representar a flor no jogo.
   const initialFlor = Matter.Bodies.rectangle(
     pos.x,
     pos.y,
     size.width,
     size.height,
     {
-      label: "Flor",
-      isStatic: true,
+      label: "Flor",   // Atribui um rótulo à flor para identificação.
+      isStatic: true, // Define o chão como estático.
+  
     }
   );
-
+// Adiciona de fato o chão ao mundo físico do Matter.
   Matter.World.add(world, [initialFlor]);
 
   return {
     body: initialFlor,
     color,
     pos,
-    renderer: <Flor />,
+    renderer: <Flor />, // Utiliza o componente chão como o renderizador.
   };
 };

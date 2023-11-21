@@ -2,10 +2,12 @@ import { Dimensions } from 'react-native'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
-
+// Pega um numero random
 export const getRandom = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
+// Função para obter posições e tamanhos aleatórios dos obistaculos
+
 export const getPipeSizePosPair = (addToPosX = 0) => {
     let yPosTop = -getRandom(220, windowHeight - 900)
 

@@ -2,13 +2,12 @@ import { ImageBackground, Text, View, TouchableOpacity, StyleSheet } from "react
 import React from "react";
 
 import BACKGROUND from "../../assets/images/background.png";
-
-import { styles } from "./styles";
 import Game from "./Game";
 
 
 const Home = () => {
   return (
+    // IMAGEM DE FUNDO
     <ImageBackground source={BACKGROUND} style={styless.container}>
       <Game />
       <View style={styless.butao}>
@@ -28,6 +27,7 @@ const Home = () => {
 };
 
 export { Home };
+//Definição de estilos para os elementos da tela
 const styless = StyleSheet.create({
   container: {
     flex: 1,

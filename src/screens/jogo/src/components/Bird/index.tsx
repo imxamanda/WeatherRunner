@@ -4,7 +4,6 @@ import Matter from "matter-js";
 import { styles } from "./styles";
 
 import BIRD from "../../assets/images/bird.png";
-
 const Bird = (props) => {
   const widthBody = props.body.bounds.max.x - props.body.bounds.min.x;
   const heightBody = props.body.bounds.max.y - props.body.bounds.min.y;
@@ -13,7 +12,7 @@ const Bird = (props) => {
   const yBody = props.body.position.y - heightBody / 2;
 
   const color = props.color;
-
+  // posicionamento e dimensões do pássaro
   return (
     <Image
       source={BIRD}
@@ -29,8 +28,8 @@ const Bird = (props) => {
     />
   );
 };
-
-export default (world, color, pos, size) => {
+// Lógica para criar e adicionar o corpo do pássaro ao mundo físico do Matter.js
+export default (world: Matter.World, color: string, pos: { x: number, y: number }, size: { width: number, height: number }) => {
   const initialBird = Matter.Bodies.rectangle(
     pos.x,
     pos.y,

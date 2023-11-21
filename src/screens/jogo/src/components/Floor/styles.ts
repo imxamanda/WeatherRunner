@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 
 export const styles = ({xBody, yBody, widthBody, heightBody, color}) => StyleSheet.create({
-    bird: {
+    Flor: {
         position: 'absolute',
         left: xBody,
         top: yBody,
