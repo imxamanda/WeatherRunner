@@ -89,18 +89,18 @@ export default function Weather({ navigation, route }) {
           </ScrollView>
         </View>
 
+        {/* botao voltar */}
         <View style={styles.butao}>
           <TouchableOpacity
             onPress={() => { navigation.navigate('Home') }}
             style={styles.buttonLarge}>
             <ImageBackground
-              style={styles.imagebutao}
-              source={require(`../../../assets/button.png`)}
+              source={require(`../../../assets/botoes/bvoltar.png`)}
             >
-              <Text style={styles.buttonText}>Voltar</Text>
             </ImageBackground>
           </TouchableOpacity>
         </View>
+        
       </View>
     </ImageBackground>
   );

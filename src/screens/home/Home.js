@@ -100,9 +100,9 @@ const Home = ({navigation}) => {
           <TouchableOpacity style={styles.buttonLarge}>
             <ImageBackground
               style={styles.buttonBackground}
-                source={require(`../../../assets/button.png`)}
+                source={require(`../../../assets/botoes/bgame.png`)}
             >
-              <Text style={styles.buttonText}>Game</Text>
+              
             </ImageBackground>
           </TouchableOpacity>
         
@@ -111,9 +111,9 @@ const Home = ({navigation}) => {
           <TouchableOpacity style={styles.buttonLarge} onPress={handleClimaPress}>
             <ImageBackground
               style={styles.buttonBackground}
-              source={require(`../../../assets/button.png`)}
+              source={require(`../../../assets/botoes/bclima.png`)}
             >
-              <Text style={styles.buttonText}>Clima</Text>
+              
             </ImageBackground>
           </TouchableOpacity>
         </View>
