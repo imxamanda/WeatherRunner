@@ -12,19 +12,20 @@ const Flor = (props) => {
 
   const color = props.color;
 // Lógica para calcular posicionamento e dimensões do chão com base nas props recebidas.
-  return (
-    <View
-      style={
-        styles({
-          widthBody,
-          heightBody,
-          xBody,
-          yBody,
-          color,
-        }).Flor
-      }
-    />
-  );
+return (
+  <View
+    style={{
+      ...styles({
+        widthBody,
+        heightBody,
+        xBody,
+        yBody,
+        color,
+      }).Flor,
+      backgroundColor: "#808080",
+    }}
+  />
+);
 };
 
 export default (world, color, pos, size) => {
