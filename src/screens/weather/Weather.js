@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import Api from '../../services/Api';
 import { useFonts, VT323_400Regular } from '@expo-google-fonts/vt323';
 import { Divider } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
+import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Weather({ navigation, route }) {
   const latitude = route.params.latitude;
@@ -14,7 +15,7 @@ export default function Weather({ navigation, route }) {
   const [apiData, setApiData] = useState(null);
 
   useEffect(() => {
-    Api.get(`/forecast.json?q=${latitude},${longitude}&lang=pt`)
+    Api.get(`/forecast.json?q=${latitude},${longitude}&lang=pt&days=3`)
       .then(res => {
         setApiData(res.data);
       });
@@ -24,35 +25,51 @@ export default function Weather({ navigation, route }) {
     VT323_400Regular,
   });
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || !apiData) {
     return null;
   }
 
-  // const isDay = horario === 'dia';
+  const renderWeatherIcon = (conditionCode) => {
+    switch (conditionCode) {
+      case 1000: // clear
+        return <FontAwesome5 name="sun" size={24} color="white" />;
+      case 1003: // partly cloudy
+        return <FontAwesome5 name="cloud-sun" size={24} color="white" />;
+      case 1006: // cloudy
+        return <FontAwesome5 name="cloud" size={24} color="white" />;
+      case 1063: // patchy rain
+      case 1186: // patchy drizzle
+      case 1189: // light freezing rain
+        return <MaterialCommunityIcons name="weather-rainy" size={24} color="white" />;
+      default:
+        return null; // ícone padrão ou nulo se não houver correspondência
+    }
+  };
 
-  // const getBackgroundColor = () => {
-  //   if (isDay) {
-  //     return { backgroundColor: '#74cae3', textColor: '#fff' }; 
-  //   } else {
-  //     return { backgroundColor: '#81007f', textColor: '#fff' }; 
-  //   }
-  // };
-
-  console.log(apiData);
   return (
     <ImageBackground source={imagemBackground} style={styles.imageBackground}>
       <View style={styles.container}>
         <View>
-          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 25, color: 'white', paddingBottom: 0, paddingLeft: 20, marginTop: 50 }}>{apiData?.location?.name}, {apiData?.location?.region}</Text>
+          <Text style={styles.cidadeTexto}>
+            {apiData?.location?.name}, {apiData?.location?.region}
+          </Text>
           <View style={styles.temperaturas}>
-            <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 90, color: 'white', paddingTop: 0, textAlign: 'center' }}>{apiData?.current?.feelslike_c}°</Text>
-            <Divider style={{ width: 1, height: '50%' }} />
+            <Text style={styles.temperaturaAtual}>
+              {apiData?.current?.feelslike_c}°
+            </Text>
+            <Divider style={{ width: 1, height: '50%', backgroundColor: 'white' }} />
             <View>
-              <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 25, color: 'white', paddingBottom: 0 }}> {apiData?.forecast?.forecastday?.[0]?.day?.maxtemp_c}°</Text>
-              <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 25, color: cor, paddingBottom: 0 }}> {apiData?.forecast?.forecastday?.[0]?.day?.mintemp_c}°</Text>
+              <Text style={styles.temperaturaDiariaTexto}>
+                {apiData?.forecast?.forecastday?.[0]?.day?.maxtemp_c}°
+              </Text>
+              <Text style={[styles.temperaturaDiariaTexto, { color: cor }]}>
+                {apiData?.forecast?.forecastday?.[0]?.day?.mintemp_c}°
+              </Text>
             </View>
           </View>
-          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 30, color: 'white', paddingTop: 0, textAlign: 'center' }}>{apiData?.current?.condition.text}</Text>
+          <Text style={[styles.condicaoAtual, { color: cor }]}>
+            {apiData?.current?.condition.text}
+          </Text>
 
           <View style={styles.info}>
             <View style={[styles.viewInfo, { backgroundColor: cor }]}>
@@ -78,30 +95,34 @@ export default function Weather({ navigation, route }) {
           </View>
         </View>
 
-        <View style={styles.viewHoras}>
-          <ScrollView style={styles.infoPorHoras}>
-            {apiData?.forecast?.forecastday?.[0]?.hour.map((hora) =>
-              <View key={hora.time_epoch}>
-                <Text>{hora.time}</Text>
-                <Text>{hora.temp_c}</Text>
+        {/* Card com previsão dos próximos dias */}
+        <ScrollView style={styles.cardProximosDias}>
+          {apiData?.forecast?.forecastday?.map((dia, index) => (
+            <View key={index} style={styles.informacoesProximoDia}>
+              <Text style={styles.dataProximoDia}>{dia.date}</Text>
+              <Text style={styles.temperaturaProximoDia}>
+                Máx: {dia.day.maxtemp_c}° | Mín: {dia.day.mintemp_c}°
+              </Text>
+              <View style={styles.condicaoIcone}>
+                {renderWeatherIcon(dia.day.condition.code)}
               </View>
-            )}
-          </ScrollView>
-        </View>
+              <Text style={styles.condicaoProximoDia}>{dia.day.condition.text}</Text>
+            </View>
+          ))}
+        </ScrollView>
 
-        {/* botao voltar */}
+        {/* Botão para voltar */}
         <View style={styles.butao}>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => { navigation.navigate('Home') }}
->
-            <ImageBackground
-            style={styles.imagebutao}
+            style={styles.buttonImage}
+          >
+            <Image
               source={require(`../../../assets/botoes/bvoltar.png`)}
-            >
-            </ImageBackground>
+              style={styles.buttonImage}
+            />
           </TouchableOpacity>
         </View>
-        
       </View>
     </ImageBackground>
   );
@@ -111,6 +132,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
+    padding: 20,
   },
   imageBackground: {
     flex: 1,
@@ -118,40 +140,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
   },
-  imagebutao: {
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 200,
-    height: 200,
-  },
-  butao: {
-    position: 'absolute',
-    right: -10,
-    bottom: -70,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 30,
+  cidadeTexto: {
     fontFamily: 'VT323_400Regular',
-    top: -30,
-    left: -1,
+    fontSize: 25,
+    color: 'white',
+    paddingBottom: 10,
   },
   temperaturas: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  texto: {
+  temperaturaAtual: {
     fontFamily: 'VT323_400Regular',
-    fontSize: 25,
-    color: '#fff',
+    fontSize: 90,
+    color: 'white',
+    paddingTop: 10,
     textAlign: 'center',
   },
-  textoPequeno: {
+  temperaturaDiariaTexto: {
     fontFamily: 'VT323_400Regular',
-    fontSize: 20,
-    color: '#fff',
+    fontSize: 25,
+    color: 'white',
+    paddingBottom: 10,
+  },
+  condicaoAtual: {
+    fontFamily: 'VT323_400Regular',
+    fontSize: 30,
+    paddingTop: 10,
     textAlign: 'center',
   },
   info: {
@@ -159,28 +175,69 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 50,
-    paddingLeft: 50,
-    paddingRight: 50,
     marginTop: 40,
   },
   viewInfo: {
     width: 90,
     height: 90,
-    backgroundColor: '#7758D1', 
+    backgroundColor: '#7758D1',
     borderRadius: 45,
     justifyContent: "center",
     alignItems: "center",
   },
-  infoPorHoras: {
-    backgroundColor: "#7758D1",
-    width: '80%',
-    height: 500,
-    marginTop: 30,
-    borderRadius: 20,
-    flexDirection: 'row',
+  texto: {
+    fontFamily: 'VT323_400Regular',
+    fontSize: 25,
+    color: 'white',
+    textAlign: 'center',
   },
-  viewHoras: {
-    justifyContent: "center",
-    alignItems: "center",
+  textoPequeno: {
+    fontFamily: 'VT323_400Regular',
+    fontSize: 20,
+    color: 'white',
+    textAlign: 'center',
+  },
+  cardProximosDias: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 20,
+    padding: 20,
+    marginTop: 30,
+    marginBottom: 70,
+  },
+  informacoesProximoDia: {
+    padding: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  dataProximoDia: {
+    fontFamily: 'VT323_400Regular',
+    fontSize: 20,
+    color: 'white',
+  },
+  temperaturaProximoDia: {
+    fontFamily: 'VT323_400Regular',
+    fontSize: 18,
+    color: 'white',
+  },
+  condicaoProximoDia: {
+    fontFamily: 'VT323_400Regular',
+    fontSize: 16,
+    color: 'white',
+  },
+  condicaoIcone: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  butao: {
+    position: 'absolute',
+    right: 20,
+    bottom: -20,
+  },
+  buttonImage: {
+    width: 130,
+    height: 160,
   },
 });
