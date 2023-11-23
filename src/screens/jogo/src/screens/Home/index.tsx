@@ -1,14 +1,16 @@
 import { ImageBackground, Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 
-import BACKGROUND from "../../assets/images/background.png";
+import BACKGROUND from "../../assets/images/background/diaNublado.png";
 import Game from "./Game";
 
 
-const Home = () => {
+const Home = ({background} :any) => {
+  console.log(background)
   return (
+
     // IMAGEM DE FUNDO
-    <ImageBackground source={BACKGROUND} style={styless.container}>
+    <ImageBackground source={background} style={styless.container}>
       <Game />
       <View style={styless.butao}>
           <TouchableOpacity

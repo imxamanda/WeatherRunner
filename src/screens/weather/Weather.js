@@ -52,7 +52,7 @@ export default function Weather({ navigation, route }) {
               <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 25, color: cor, paddingBottom: 0 }}> {apiData?.forecast?.forecastday?.[0]?.day?.mintemp_c}°</Text>
             </View>
           </View>
-          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 30, color: cor, paddingTop: 0, textAlign: 'center' }}>{apiData?.current?.condition.text}</Text>
+          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 30, color: 'white', paddingTop: 0, textAlign: 'center' }}>{apiData?.current?.condition.text}</Text>
 
           <View style={styles.info}>
             <View style={[styles.viewInfo, { backgroundColor: cor }]}>

@@ -5,11 +5,11 @@ import { Home } from "./screens/Home";
 
 SplashScreen.preventAutoHideAsync();
 
-const App = () => {
+const App = ({navigation, route} :any) => {
   const SplashScreenHide = useCallback(async () => {
     await SplashScreen.hideAsync();
   }, []);
-
+console.log(route.params.horario)
   useEffect(() => {
     setTimeout(() => {
       SplashScreenHide();
@@ -18,7 +18,8 @@ const App = () => {
   return (
     <>
       <StatusBar style="auto" hidden />
-      <Home />
+      <Home  background={ route.params.horario } />
+
     </>
   );
 };

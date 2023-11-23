@@ -7,6 +7,6 @@ export const styles = ({xBody, yBody, widthBody, heightBody, color}) => StyleShe
         top: yBody,
         width: widthBody,
         height: heightBody,
-        backgroundColor: color,
+        backgroundColor: 'white',
     }
 })
