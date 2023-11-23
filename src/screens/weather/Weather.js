@@ -91,10 +91,11 @@ export default function Weather({ navigation, route }) {
 
         {/* botao voltar */}
         <View style={styles.butao}>
-          <TouchableOpacity
+          <TouchableOpacity 
             onPress={() => { navigation.navigate('Home') }}
 >
             <ImageBackground
+            style={styles.imagebutao}
               source={require(`../../../assets/botoes/bvoltar.png`)}
             >
             </ImageBackground>
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   },
   butao: {
     position: 'absolute',
-    right: -30,
+    right: -10,
     bottom: -70,
   },
   buttonText: {

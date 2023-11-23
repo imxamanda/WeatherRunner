@@ -18,9 +18,8 @@ const Home = ({background} :any) => {
            >
             <ImageBackground
               style={styless.imagebutao}
-              source={require(`../../../../../../assets/button.png`)}
+              source={require('../../../../../../assets/botoes/bvoltar.png')}
             >
-              <Text style={styless.buttonText}>Voltar</Text>
             </ImageBackground>
           </TouchableOpacity>
         </View>
@@ -50,7 +49,7 @@ const styless = StyleSheet.create({
   },
   butao: {
     position: 'absolute',
-    right: -30,
+    right: -10,
     bottom: -70,
   },
   buttonText: {
