@@ -1,5 +1,5 @@
 
-import  BACKGROUND  from "../assets/images/background.png";
+import  BACKGROUND  from "../../../../../assets/background/diaNublado.png";
 import BIRD  from '../assets/images/bird.png';
 import GAME_OVER  from '../assets/images/game-over.png';
 import LOGO  from '../assets/images/logo.png';

@@ -77,8 +77,6 @@ const Home = ({navigation}) => {
       };
       const hadleGamePress = () => {
         navigation.navigate('Jogo', {
-          latitude: localizacaoData.latitude,
-          longitude: localizacaoData.longitude,
           horario: imagemBackground
         });
       };
@@ -93,7 +91,7 @@ const Home = ({navigation}) => {
           {/* Temperatura */}
           <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 150, color: 'white', paddingTop: 0 }}>{localizacaoData?.apiData?.current?.feelslike_c}°</Text>
 
-          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 40, color: cor, marginTop: 28, padding: 20 }}>{localizacaoData?.apiData?.current?.condition.text}</Text>
+          <Text style={{ fontFamily: 'VT323_400Regular', fontSize: 40, color: 'white', marginTop: 28, padding: 20 }}>{localizacaoData?.apiData?.current?.condition.text}</Text>
            
            {/* Personagem */}
           <Image

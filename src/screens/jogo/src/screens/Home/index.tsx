@@ -1,14 +1,16 @@
 import { ImageBackground, Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 
-import BACKGROUND from "../../assets/images/background.png";
+import BACKGROUND from "../../assets/images/background/diaNublado.png";
 import Game from "./Game";
 
 
-const Home = () => {
+const Home = ({background} :any) => {
+  console.log(background)
   return (
+
     // IMAGEM DE FUNDO
-    <ImageBackground source={BACKGROUND} style={styless.container}>
+    <ImageBackground source={background} style={styless.container}>
       <Game />
       <View style={styless.butao}>
           <TouchableOpacity
@@ -16,9 +18,8 @@ const Home = () => {
            >
             <ImageBackground
               style={styless.imagebutao}
-              source={require(`../../../../../../assets/button.png`)}
+              source={require('../../../../../../assets/botoes/bvoltar.png')}
             >
-              <Text style={styless.buttonText}>Voltar</Text>
             </ImageBackground>
           </TouchableOpacity>
         </View>
@@ -48,7 +49,7 @@ const styless = StyleSheet.create({
   },
   butao: {
     position: 'absolute',
-    right: -30,
+    right: -10,
     bottom: -70,
   },
   buttonText: {
