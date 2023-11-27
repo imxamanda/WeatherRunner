@@ -96,19 +96,21 @@ export default function Weather({ navigation, route }) {
         </View>
 
         {/* Card com previsão dos próximos dias */}
-        <ScrollView style={styles.cardProximosDias}>
-          {apiData?.forecast?.forecastday?.map((dia, index) => (
-            <View key={index} style={styles.informacoesProximoDia}>
-              <Text style={styles.dataProximoDia}>{dia.date}</Text>
-              <Text style={styles.temperaturaProximoDia}>
-                Máx: {dia.day.maxtemp_c}° | Mín: {dia.day.mintemp_c}°
-              </Text>
-              <View style={styles.condicaoIcone}>
-                {renderWeatherIcon(dia.day.condition.code)}
-              </View>
-              <Text style={styles.condicaoProximoDia}>{dia.day.condition.text}</Text>
-            </View>
-          ))}
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.cardProximosDias}>
+        {apiData?.forecast?.forecastday?.map((dia, index) => (
+  <View key={index} style={styles.informacoesProximoDia}>
+    <Text style={styles.dataProximoDia}>
+      {new Date(dia.date).toLocaleDateString()}
+    </Text>
+    <Text style={styles.temperaturaProximoDia}>
+      Máx: {dia.day.maxtemp_c}° | Mín: {dia.day.mintemp_c}°
+    </Text>
+    <View style={styles.condicaoIcone}>
+      {renderWeatherIcon(dia.day.condition.code)}
+    </View>
+    <Text style={styles.condicaoProximoDia}>{dia.day.condition.text}</Text>
+  </View>
+))}
         </ScrollView>
 
         {/* Botão para voltar */}
@@ -133,12 +135,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     padding: 20,
+    height: '100%',
   },
   imageBackground: {
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
     width: '100%',
+    height: '100%',
   },
   cidadeTexto: {
     fontFamily: 'VT323_400Regular',
@@ -198,6 +202,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   cardProximosDias: {
+    flex: 1,
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     borderRadius: 20,
     padding: 20,
@@ -232,9 +237,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   butao: {
-    position: 'absolute',
-    right: 20,
-    bottom: -20,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
   },
   buttonImage: {
     width: 130,
